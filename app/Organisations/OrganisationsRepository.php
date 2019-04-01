@@ -11,4 +11,13 @@ class OrganisationsRepository
     {
         return $account->organisations()->get();
     }
+
+    public function getOrganisationsForAccountsKeyedByAccountId(Collection $accounts): Collection
+    {
+        return $accounts
+            ->load('organisations')
+            ->mapWithKeys(function ($account) {
+                return [$account->id => $account->organisations];
+            });
+    }
 }

@@ -15,10 +15,15 @@ class Account extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'created_at' => $this->created_at->toDateTimestring(),
+            'updated_at' => $this->updated_at->toDateTimestring(),
+        ];
     }
 
-    public function embedUsers(bool $shouldEmbed, \App\Users\UsersRepository $users): Account
+    public function embedUsersIf(bool $shouldEmbed, \App\Users\UsersRepository $users): Account
     {
         if ($shouldEmbed) {
             $this->mergeAdditional([
@@ -33,7 +38,7 @@ class Account extends JsonResource
         return $this;
     }
 
-    public function embedOrganisations(bool $shouldInclude, OrganisationsRepository $organisations): Account
+    public function embedOrganisationsIf(bool $shouldInclude, OrganisationsRepository $organisations): Account
     {
         if ($shouldInclude) {
             $this->mergeAdditional([

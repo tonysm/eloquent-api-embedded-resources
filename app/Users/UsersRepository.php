@@ -11,4 +11,13 @@ class UsersRepository
     {
         return $account->users()->get();
     }
+
+    public function getUsersOfAccountsKeyedByAccountId(Collection $accounts): Collection
+    {
+        return $accounts
+            ->load('users')
+            ->mapWithKeys(function (Account $account) {
+                return [$account->id => $account->users];
+            });
+    }
 }
