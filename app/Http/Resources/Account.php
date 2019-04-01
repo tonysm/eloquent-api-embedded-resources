@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Users\UsersRepository;
 use App\Organisations\OrganisationsRepository;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,7 +24,7 @@ class Account extends JsonResource
         ];
     }
 
-    public function embedUsersIf(bool $shouldEmbed, \App\Users\UsersRepository $users): Account
+    public function embedUsersIf(bool $shouldEmbed, UsersRepository $users): Account
     {
         if ($shouldEmbed) {
             $this->mergeAdditional([
